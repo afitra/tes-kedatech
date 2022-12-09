@@ -26,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
       beforeValidate(Parking) {
         var price = 0
         var rate_hour = 5000
-        var rate_day = 5000
+        var rate_day = 80000
 
 
         var day = Parking.parking_out.getDate() - Parking.parking_in.getDate()
