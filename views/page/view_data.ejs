@@ -15,54 +15,119 @@
         <%- include('../partials/message.ejs') %>
 
         <!-- Page Heading -->
-        <h1 class="h3 mb-4 text-gray-800">Bank</h1>
+        <h1 class="h3 mb-4 text-gray-800">Parking </h1>
         <!-- End Heading -->
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-modal">
-                <i class="fas fa-plus"></i>
-            </button>
+              <form action="/parking/search"  method="POST" >
+                <div class="row">
+                  <div class="col">
+                    <label for="exampleInputEmail1">Vehicle Type</label>
+                    <select class="form-control" id="inputVehicleType" name="vehicle">
+                      <option value=''  >none</option>
+                      <% for(var i=0; i < vehicle.length; i++) { %>
+                      <option value='<%= vehicle[i].id %>'  ><%= vehicle[i].name %></option>
+                      <% } %>
+                    </select>
+                  </div>
+                  <div class="col">
+                    <label for="exampleInputParkingIn">Parking In</label>
+                    <input type="datetime-local" class="form-control" id="inputParkingIn" name="parking_in" >
+                  </div>
+                  <div class="col">
+                    <label for="exampleInputParkingOut">Parking Out</label>
+                    <input type="datetime-local" class="form-control" id="inputParkingOut" name="parking_out" >
+                  </div>
+                </div>
+                <div class="row pt-3">
+                  <div class="col">
+                    <label for="exampleInputPriceStart">Price start</label>
+                    <input type="text" class="form-control" name="price_start" placeholder="ex: 500"  >
+                  </div>
+                  <div class="col">
+                    <label for="exampleInputPriceEnd">Price End</label>
+                    <input type="text" class="form-control" name="price_end" placeholder="ex: 1000000" >
+                  </div>
+                
+                </div>
+                <div class="row">
+                  <div class="col pt-3">
+
+                    <button type="submit" class="btn btn-primary">Filter</button>
+                    <% if(!pagination){ %>
+                      <a class="btn btn-info" href="/show" >back to show data</a>
+                      <% } %>
+                  </div>
+                </div>
+             
+              </form> 
             </div>
             <div class="card-body">
-            <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                <thead>
-                    <tr>
-                    <th>No</th>
-                    <th>Name Bank</th>
-                    <th>Nomor Rekening</th>
-                    <th>Name</th>
-                    <th>Image</th>
-                    <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <%   for(let i = 0; i < bank.length; i++){ %>
-                    <tr>
-                    <td><%= i + 1 %></td>
-                    <td><%= bank[i].nameBank %></td>
-                    <td><%= bank[i].nomorRekening %></td>
-                    <td><%= bank[i].name %></td>
-                    <td>
-                        <img src="<%- `${host}/${ bank[i].imageUrl}`  %>" alt="imageUrl" width="70px"  >
-                    </td>
-                    <td>
-                        <form action="/admin/bank/<%= bank[i].id %>?_method=DELETE" method="POST">
-                        <a href="javascript:void();" type="button" class="btn btn-warning btn-circle btn-sm button-update"
-                            data-id="<%= bank[i].id %>" data-name="<%= bank[i].name %>" data-namebank="<%= bank[i].nameBank %>"
-                            data-nomorrekening="<%= bank[i].nomorRekening %>" "><i
-                            class=" fas fa-edit"></i></a>
-                        <button type="submit" class="btn btn-danger btn-circle btn-sm"><i class="fas fa-trash"></i></button>
-                        </form>
-                    </td>
-                    </tr>
-                    <% } %>
-                </tbody>
-                </table>
+             
+            <table class="table" id="dataTableParking" >
+              <thead>
+                <tr>
+                  <th>No</th>
+                  <th>Vehicle Type</th>
+                  <th>Parking In</th>
+                  <th>Parking Out</th>
+                  <th>Price</th>
+          
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <%   for(let i = 0; i < parking.rows.length; i++){ %>
+                  <tr>
+                  <td><%= parking.rows[i].id %></td>
+                  <td><%= parking.rows[i].vehicle.name %></td>
+                  <td><%= parking.rows[i].parking_in %></td>
+                  <td><%= parking.rows[i].parking_out  %></td>
+                  <td > <%= parking.rows[i].priceFormat %></td>
+                  
+                  <td>
+                    <form
+                      action="/parking/<%= parking.rows[i].id%>?_method=DELETE"
+                      method="POST"
+                    >
+                      <a
+                        href="javascript:void(0);"
+                        onclick="editParking ();"
+                        type="button"
+                        class="btn btn-warning btn-circle btn-sm button-update"
+                        data-id="<%= parking.rows[i].id %>"
+                        data-vehicle_id="<%= parking.rows[i].vehicle_id %>"
+                        data-parking_in="<%= parking.rows[i].parking_in %>"
+                        data-parking_out="<%= parking.rows[i].parking_out %>"
+                        ><i class="fas fa-edit"></i
+                      ></a>
+                      <button type="submit" class="btn btn-danger btn-circle btn-sm">
+                        <i class="fas fa-trash"></i>
+                      </button>
+                    </form>
+                  </td>
+                  </tr>
+                  <% } %>
+              </tbody>
+            </table>  
+            <%if (pagination ) { %>
+              <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                  
+                  <%   for(let i = 0; i < page; i++){ %>
+                  <li class="page-item <%= query.page == i+1 ? 'active' : '' %>"><a class="page-link" href="/show?page=<%= i + 1 %>&limit=<%= query.limit  %>"><%=  i +1 %>  </a></li>
+                  <% } %>
+                   
+                </ul>
+              </nav>
+              
+              <% } %>
+                 
             </div>
-            </div>
+            
         </div>
+        
       </div>
       <!-- /.container-fluid -->
     </div>
@@ -108,12 +173,35 @@
         <button class="btn btn-secondary" type="button" data-dismiss="modal">
           Cancel
         </button>
-        <a class="btn btn-primary" href="login.html">Logout</a>
+        <a class="btn btn-primary" href="#">Logout</a>
       </div>
     </div>
   </div>
 </div>
 
- 
+
+<%- include("./edit_parking_modal.ejs") %>
 <%- include('../partials/js.ejs') %>
+ 
+<script>
+  function editParking() {
+    
+    $("#dataTableParking").on("click", ".button-update", function () {
+      $("#edit-parking-modal").modal("show")
+      let id = $(this).data("id")
+      let vehicle_id = $(this).data("vehicle_id")
+      let parking_in = $(this).data("parking_in")
+      let parking_out = $(this).data("parking_out")
+      $(".id").val(id)
+      $(".parking_in").val(parking_in)
+      $(".parking_out").val(parking_out)
+      // document.getElementById("modalInputParkingIn").value=new Date(parking_in)
+      // document.getElementById("modalInputParkingOut").value=new Date(parking_out)
+      $(".vehicle_id").val(vehicle_id)
+    })
+  }
+ 
+
+</script>
+
  

@@ -9,16 +9,16 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      vihecle_id: {
-        type: Sequelize.STRING,
+      vehicle_id: {
+        type: Sequelize.INTEGER,
         allowNull: false,
       },
       parking_in: {
-        type: Sequelize.DATE,
+        type: Sequelize.STRING,
         allowNull: false,
       },
       parking_out: {
-        type: Sequelize.DATE,
+        type: Sequelize.STRING,
         allowNull: false,
       },
       price: {

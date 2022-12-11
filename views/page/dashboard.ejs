@@ -15,31 +15,11 @@
         <%- include('../partials/message.ejs') %>
 
         <!-- Page Heading -->
-        <h1 class="h3 mb-4 text-gray-800">Add Parking</h1>
+        <h1 class="h3 mb-4 text-gray-800">Dashboard</h1>
         <!-- End Heading -->
-        <!-- Form  -->
-        <form action="/parking"
-          method="POST">
-          <div class="mb-3">
-            <label for="inputVehicleType" class="form-label">Vehicle Type</label>
-            <select class="form-control" id="inputVehicleType" name="vehicle_id">
-         
-              <% for(var i=0; i < vehicle.length; i++) { %>
-              <option value='<%= vehicle[i].id %>'  ><%= vehicle[i].name %></option>
-              <% } %>
-            </select>
-          </div>
-          <div class="mb-3">
-            <label for="inputParkingIn" class="form-label">Parking in</label>
-            <input type="datetime-local" class="form-control" id="inputParkingIn" name="parking_in">
-          </div>
-          <div class="mb-3">
-            <label for="inputParkingOut" class="form-label">Parking out</label>
-            <input type="datetime-local" class="form-control" id="inputParkingOut" name="parking_out">
-          </div>
-          <button type="submit" class="btn btn-primary">Add</button>
-        </form>
+        <!-- DataTales Example -->
       
+        
       </div>
       <!-- /.container-fluid -->
     </div>
