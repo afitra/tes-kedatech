@@ -113,33 +113,15 @@ module.exports = (sequelize, DataTypes) => {
 
         
  
-        console.log("all      >>", rate_hour);
-        console.log("second   >>",parking_total_second);
-        console.log("minute   >>",parking_total_minute);
-        console.log("hour     >>",parking_total_hour);
-        console.log("day      >>",parking_total_day);
-        console.log("month    >>",parking_total_month);
-        console.log("year     >>",parking_total_year);
+        // console.log("all      >>", rate_hour);
+        // console.log("second   >>",parking_total_second);
+        // console.log("minute   >>",parking_total_minute);
+        // console.log("hour     >>",parking_total_hour);
+        // console.log("day      >>",parking_total_day);
+        // console.log("month    >>",parking_total_month);
+        // console.log("year     >>",parking_total_year);
         
-        // price += parking_total_year * 365 * rate_day
-        // price += parking_total_month * 30 * rate_day
-        // price += parking_total_day * rate_day
-        // price += parking_total_hour * rate_hour
-
-        // if(parking_total_minute > 1 || parking_total_minute >= 1 && parking_total_second > 0 ){
- 
-        //   price += rate_hour
-        // }
-
-        // Parking.price = price
-     
-       
-        
-        // if(total_second_in >= total_second_out){
-        //   throw new Error('something wrong with date')
-        // }
-
-        // var menit =   Math.floor(total_second / 3600)
+         
        
         Parking.price = getPrice({rate_hour,rate_day},total_second)
    

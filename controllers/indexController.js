@@ -31,6 +31,7 @@ module.exports = {
         var queryLimit = req.query.limit ? req.query.limit : 3
         var queryPage = req.query.page ? req.query.page : 1
         var offset= 1
+     
         if(queryPage==1){
           offset = 0
         }else{
@@ -60,7 +61,7 @@ module.exports = {
 
         var parking_in = date.format(new Date(req.body.parking_in),'DD/MM/YYYY HH:mm:ss');
         var parking_out = date.format(new Date(req.body.parking_out),'DD/MM/YYYY HH:mm:ss');
-        // res.send([req.body.parking_in  , req.body.parking_out,])
+      
 
         if(req.body.parking_in && req.body.parking_out ==""){
    
@@ -77,7 +78,7 @@ module.exports = {
           
         }
  
-        console.log(costomQuery);
+      
         
         let parking = await Parking.findAndCountAll({
           order: [["id", "DESC"]],
@@ -102,7 +103,7 @@ module.exports = {
         if(parking.count%queryLimit !== 0){
           page ++
         }
-  
+ 
         res.render("page/view_data", {
           title: "AMB | show",
           alert,
@@ -138,9 +139,7 @@ module.exports = {
                 [{
                   model: Vehicle,
                   as: "vehicle",
-                }],
-           
-            
+                }],   
         })
         for (let i = 0; i < parking.rows.length; i++) {
           var temp = JSON.parse(JSON.stringify(parking.rows[i]));
@@ -163,6 +162,7 @@ module.exports = {
             pagination:true,
             vehicle,page, query:{limit:queryLimit, page:queryPage}
           })
+           
       } catch (err) {
   
  
